@@ -1,4 +1,7 @@
 OrgOrg::Application.routes.draw do
+  resources :roles
+
+
   resources :org_types
 
 

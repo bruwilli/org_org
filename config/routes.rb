@@ -1,4 +1,7 @@
 OrgOrg::Application.routes.draw do
+  resources :org_types
+
+
   resources :members
 
 

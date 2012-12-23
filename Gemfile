@@ -4,6 +4,7 @@ gem 'rails', '3.2.9'
 
 group :development do
   gem 'sqlite3', '1.3.5'
+ gem 'rspec-rails', '2.11.0'
 end
 
 gem 'composite_primary_keys', '=5.0.10'
@@ -21,6 +22,10 @@ gem 'jquery-rails', '2.0.2'
 
 group :production do
   gem 'pg', '0.12.2'
+end
+
+group :test do
+  gem 'capybara', '1.1.2'
 end
 
 # To use ActiveModel has_secure_password

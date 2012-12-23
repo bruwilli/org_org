@@ -6,6 +6,7 @@ group :development do
   gem 'sqlite3', '1.3.5'
 end
 
+gem 'composite_primary_keys', '=5.0.10'
 
 # Gems used only for assets and not required
 # in production environments by default.

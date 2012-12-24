@@ -4,15 +4,15 @@ describe "Static pages" do
 
   describe "Home page" do
 
-    it "should have the h1 'Sample App'" do
+    it "should have the h1 'Org Org'" do
       visit '/static_pages/home'
-      page.should have_selector('h1', :text => 'Sample App')
+      page.should have_selector('h1', :text => 'Org-Org')
     end
 
     it "should have the base title" do
       visit '/static_pages/home'
       page.should have_selector('title',
-                        :text => "Ruby on Rails Tutorial Sample App")
+                        :text => "Org-Org: Organize Your Organization")
     end
 
     it "should not have a custom page title" do
@@ -31,7 +31,7 @@ describe "Static pages" do
     it "should have the right title" do
       visit '/static_pages/help'
       page.should have_selector('title',
-                        :text => "Ruby on Rails Tutorial Sample App | Help")
+                        :text => "Org-Org: Organize Your Organization | Help")
     end
   end
 
@@ -45,7 +45,7 @@ describe "Static pages" do
     it "should have the right title" do
       visit '/static_pages/about'
       page.should have_selector('title',
-                        :text => "Ruby on Rails Tutorial Sample App | About Us")
+                        :text => "Org-Org: Organize Your Organization | About Us")
     end
   end
   

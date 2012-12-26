@@ -15,7 +15,7 @@ class OrgTypeEditor < ActiveRecord::Base
                   :password, :password_confirmation
   has_secure_password
 
-  before_save { |orgTypeEditor| orgTypeEditor.email = email.downcase }
+  before_save { self.email.downcase! }
 
   
   validates :first_name, presence: true, length: { maximum: 64 }

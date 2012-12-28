@@ -1,10 +1,13 @@
 OrgOrg::Application.routes.draw do
-  get "org_type_editor/new"
+  get "org_type_editors/new"
+
+  resources :org_type_editors
 
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'
   match '/contacts', to: 'static_pages#contacts'
+  match '/new_org_profile_editor', to: 'org_type_editors#new'
   
   resources :roles
 

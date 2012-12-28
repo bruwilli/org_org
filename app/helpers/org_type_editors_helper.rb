@@ -1,0 +1,3 @@
+module OrgTypeEditorsHelper
+
+end

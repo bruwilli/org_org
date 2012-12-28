@@ -1,0 +1,31 @@
+<% provide(:title, "Become an Org Profile Editor")%>
+<h1>Become an Org Profile Editor</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@org_type_editor) do |f| %>
+
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+
+      <%= f.label :email_confirmation, "Confirm email" %>
+      <%= f.text_field :email_confirmation %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirm password" %>
+      <%= f.password_field :password_confirmation %>
+
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

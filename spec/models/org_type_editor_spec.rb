@@ -2,12 +2,13 @@
 #
 # Table name: org_type_editors
 #
-#  id         :integer          not null, primary key
-#  first_name :string(255)
-#  last_name  :string(255)
-#  email      :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  first_name      :string(255)
+#  last_name       :string(255)
+#  email           :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  password_digest :string(255)
 #
 
 require 'spec_helper'
@@ -17,6 +18,7 @@ describe OrgTypeEditor do
     @orgTypeEditor = OrgTypeEditor.new(first_name: "Example", 
                                        last_name: "User", 
                                        email: "user@example.com",
+                                       email_confirmation: "user@example.com",
                                        password: "foobar12", 
                                        password_confirmation: "foobar12")
   end
@@ -26,6 +28,7 @@ describe OrgTypeEditor do
   it { should respond_to(:first_name) }
   it { should respond_to(:last_name) }
   it { should respond_to(:email) }
+  it { should respond_to(:email_confirmation) }
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
@@ -45,6 +48,11 @@ describe OrgTypeEditor do
 
   describe "when email is not present" do
     before { @orgTypeEditor.email = " " }
+    it { should_not be_valid }
+  end
+
+  describe "when email confirmation is not present" do
+    before { @orgTypeEditor.email_confirmation = " " }
     it { should_not be_valid }
   end
 
@@ -73,7 +81,7 @@ describe OrgTypeEditor do
     it "should be valid" do
       addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       addresses.each do |valid_address|
-        @orgTypeEditor.email = valid_address
+        @orgTypeEditor.email = @orgTypeEditor.email_confirmation = valid_address
         @orgTypeEditor.should be_valid
       end      
     end
@@ -82,10 +90,28 @@ describe OrgTypeEditor do
   describe "when email address is already taken" do
     before do
       user_with_same_email = @orgTypeEditor.dup
-      user_with_same_email.email = @orgTypeEditor.email.upcase
+      user_with_same_email.email = @orgTypeEditor.email_confirmation = @orgTypeEditor.email.upcase
       user_with_same_email.save
     end
 
+    it { should_not be_valid }
+  end
+
+  describe "when email doesn't match confirmation" do
+    before { @orgTypeEditor.email_confirmation = "mismatch@mismatch.com" }
+    it { should_not be_valid }
+  end
+
+  describe "when email matches confirmation except case" do
+    before do
+      @orgTypeEditor.email_confirmation.downcase!
+      @orgTypeEditor.email_confirmation.upcase!
+    end
+    it { should be_valid }
+  end
+
+  describe "when email doesn't match confirmation" do
+    before { @orgTypeEditor.email_confirmation = "mismatch@mismatch.com" }
     it { should_not be_valid }
   end
 

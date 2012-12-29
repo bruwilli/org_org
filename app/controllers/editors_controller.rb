@@ -10,6 +10,7 @@ class EditorsController < ApplicationController
   def create
     @editor = Editor.new(params[:editor])
     if @editor.save
+      sign_in_as_editor @editor
       flash[:success] = "Welcome to the Org-Organizer Editor Community!"
       redirect_to @editor
     else

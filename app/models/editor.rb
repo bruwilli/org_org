@@ -18,9 +18,9 @@ class Editor < ActiveRecord::Base
   attr_accessor :email_confirmation
   has_secure_password
 
-  before_save do 
-    self.email.downcase!
-  end
+  before_save { self.email.downcase! }
+  before_save :create_remember_token
+
   
   validates :first_name, presence: true, length: { maximum: 64 }
   validates :last_name, presence: true, length: { maximum: 64 }
@@ -34,4 +34,10 @@ class Editor < ActiveRecord::Base
   validates :password, presence: true,
                        length: { minimum: 8 },
                        confirmation: true
+
+  private
+
+    def create_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
+    end
 end

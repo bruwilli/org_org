@@ -7,8 +7,8 @@ describe "Editor pages" do
   describe "editor signup page" do
     before { visit editor_signup_path }
 
-    it { should have_selector('h1',    text: 'Become an Org-Organizer Editor') }
-    it { should have_selector('title', text: 'Become an Editor') }
+    it { should have_heading('Become an Org-Organizer Editor') }
+    it { should have_title('Become an Editor') }
   end
 
   describe "editor settings page" do
@@ -17,9 +17,9 @@ describe "Editor pages" do
     # Code to make a user variable
     before { visit editor_path(editor) }
 
-    it { should have_selector('h1',    text: editor.first_name) }
-    it { should have_selector('h1',    text: editor.last_name) }
-    it { should have_selector('title', text: editor.first_name) }
+    it { should have_heading(editor.first_name) }
+    it { should have_heading(editor.last_name) }
+    it { should have_title(editor.first_name) }
   end
 
   describe "signup" do
@@ -46,6 +46,15 @@ describe "Editor pages" do
 
       it "should create an editor" do
         expect { click_button submit }.to change(Editor, :count).by(1)
+      end
+      
+      describe "after saving the editor" do
+        before { click_button submit }
+        let(:editor) { Editor.find_by_email('user@example.com') }
+
+        it { should have_title(editor.first_name) }
+        it { should have_success_message('Welcome') }
+        it { should have_link('Editor sign out') }      
       end
     end
   end

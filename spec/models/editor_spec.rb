@@ -32,8 +32,8 @@ describe Editor do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
-  it { should respond_to(:authenticate)}
-
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:authenticate) }  
   it { should be_valid }
   
   describe "when first_name is not present" do
@@ -150,4 +150,9 @@ describe Editor do
     before { @editor.password = @editor.password_confirmation = "a" * 7 }
     it { should be_invalid }
   end  
+
+  describe "editor remember token" do
+    before { @editor.save }
+    its(:remember_token) { should_not be_blank }
+  end
 end

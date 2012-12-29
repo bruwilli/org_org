@@ -2,6 +2,10 @@ OrgOrg::Application.routes.draw do
   resources :editors
   match '/editor_signup', to: 'editors#new'
 
+  resources :editor_sessions, only: [:new, :create, :destroy]
+  match '/editor_signin',  to: 'editor_sessions#new'
+  match '/editor_signout', to: 'editor_sessions#destroy', via: :delete
+
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'

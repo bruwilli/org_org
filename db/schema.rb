@@ -13,16 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20121226035150) do
 
-  create_table "members", :force => true do |t|
-    t.integer  "org_id"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "org_type_editors", :force => true do |t|
+  create_table "editors", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
@@ -31,7 +22,16 @@ ActiveRecord::Schema.define(:version => 20121226035150) do
     t.string   "password_digest"
   end
 
-  add_index "org_type_editors", ["email"], :name => "index_org_type_editors_on_email", :unique => true
+  add_index "editors", ["email"], :name => "index_editors_on_email", :unique => true
+
+  create_table "members", :force => true do |t|
+    t.integer  "org_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "org_types", :force => true do |t|
     t.string   "name"

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrgTypeEditorsController do
+describe EditorsController do
 
   describe "GET 'new'" do
     it "returns http success" do

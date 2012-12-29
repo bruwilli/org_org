@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: org_type_editors
+# Table name: editors
 #
 #  id              :integer          not null, primary key
 #  first_name      :string(255)
@@ -13,9 +13,9 @@
 
 require 'spec_helper'
 
-describe OrgTypeEditor do
+describe Editor do
   before do
-    @orgTypeEditor = OrgTypeEditor.new(first_name: "Example", 
+    @editor = Editor.new(first_name: "Example", 
                                        last_name: "User", 
                                        email: "user@example.com",
                                        email_confirmation: "user@example.com",
@@ -23,7 +23,7 @@ describe OrgTypeEditor do
                                        password_confirmation: "foobar12")
   end
 
-  subject { @orgTypeEditor }
+  subject { @editor }
 
   it { should respond_to(:first_name) }
   it { should respond_to(:last_name) }
@@ -37,32 +37,32 @@ describe OrgTypeEditor do
   it { should be_valid }
   
   describe "when first_name is not present" do
-    before { @orgTypeEditor.first_name = " " }
+    before { @editor.first_name = " " }
     it { should_not be_valid }
   end
 
   describe "when last_name is not present" do
-    before { @orgTypeEditor.last_name = " " }
+    before { @editor.last_name = " " }
     it { should_not be_valid }
   end
 
   describe "when email is not present" do
-    before { @orgTypeEditor.email = " " }
+    before { @editor.email = " " }
     it { should_not be_valid }
   end
 
   describe "when email confirmation is not present" do
-    before { @orgTypeEditor.email_confirmation = " " }
+    before { @editor.email_confirmation = " " }
     it { should_not be_valid }
   end
 
    describe "when first_name is too long" do
-    before { @orgTypeEditor.first_name = "a" * 65 }
+    before { @editor.first_name = "a" * 65 }
     it { should_not be_valid }
   end
 
    describe "when last_name is too long" do
-    before { @orgTypeEditor.last_name = "a" * 65 }
+    before { @editor.last_name = "a" * 65 }
     it { should_not be_valid }
   end
 
@@ -71,8 +71,8 @@ describe OrgTypeEditor do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
                      foo@bar_baz.com foo@bar+baz.com]
       addresses.each do |invalid_address|
-        @orgTypeEditor.email = invalid_address
-        @orgTypeEditor.should_not be_valid
+        @editor.email = invalid_address
+        @editor.should_not be_valid
       end      
     end
   end
@@ -81,16 +81,16 @@ describe OrgTypeEditor do
     it "should be valid" do
       addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
       addresses.each do |valid_address|
-        @orgTypeEditor.email = @orgTypeEditor.email_confirmation = valid_address
-        @orgTypeEditor.should be_valid
+        @editor.email = @editor.email_confirmation = valid_address
+        @editor.should be_valid
       end      
     end
   end
 
   describe "when email address is already taken" do
     before do
-      user_with_same_email = @orgTypeEditor.dup
-      user_with_same_email.email = @orgTypeEditor.email_confirmation = @orgTypeEditor.email.upcase
+      user_with_same_email = @editor.dup
+      user_with_same_email.email = @editor.email_confirmation = @editor.email.upcase
       user_with_same_email.save
     end
 
@@ -98,56 +98,56 @@ describe OrgTypeEditor do
   end
 
   describe "when email doesn't match confirmation" do
-    before { @orgTypeEditor.email_confirmation = "mismatch@mismatch.com" }
+    before { @editor.email_confirmation = "mismatch@mismatch.com" }
     it { should_not be_valid }
   end
 
   describe "when email matches confirmation except case" do
     before do
-      @orgTypeEditor.email_confirmation.downcase!
-      @orgTypeEditor.email_confirmation.upcase!
+      @editor.email_confirmation.downcase!
+      @editor.email_confirmation.upcase!
     end
     it { should be_valid }
   end
 
   describe "when email doesn't match confirmation" do
-    before { @orgTypeEditor.email_confirmation = "mismatch@mismatch.com" }
+    before { @editor.email_confirmation = "mismatch@mismatch.com" }
     it { should_not be_valid }
   end
 
   describe "when password is not present" do
-    before { @orgTypeEditor.password = @orgTypeEditor.password_confirmation = " " }
+    before { @editor.password = @editor.password_confirmation = " " }
     it { should_not be_valid }
   end
 
   describe "when password doesn't match confirmation" do
-    before { @orgTypeEditor.password_confirmation = "mismatch" }
+    before { @editor.password_confirmation = "mismatch" }
     it { should_not be_valid }
   end
 
-  describe "@orgTypeEditor password confirmation is nil" do
-    before { @orgTypeEditor.password_confirmation = nil }
+  describe "@editor password confirmation is nil" do
+    before { @editor.password_confirmation = nil }
     it { should_not be_valid }
   end
 
   describe "return value of authenticate method" do
-    before { @orgTypeEditor.save }
-    let(:found_org_type_editor) { OrgTypeEditor.find_by_email(@orgTypeEditor.email) }
+    before { @editor.save }
+    let(:found_editor) { Editor.find_by_email(@editor.email) }
 
     describe "with valid password" do
-      it { should == found_org_type_editor.authenticate(@orgTypeEditor.password) }
+      it { should == found_editor.authenticate(@editor.password) }
     end
 
     describe "with invalid password" do
-      let(:org_type_editor_for_invalid_password) { found_org_type_editor.authenticate("invalid12") }
+      let(:editor_for_invalid_password) { found_editor.authenticate("invalid12") }
 
-      it { should_not == org_type_editor_for_invalid_password }
-      specify { org_type_editor_for_invalid_password.should be_false }
+      it { should_not == editor_for_invalid_password }
+      specify { editor_for_invalid_password.should be_false }
     end
   end  
   
   describe "with a password that's too short" do
-    before { @orgTypeEditor.password = @orgTypeEditor.password_confirmation = "a" * 7 }
+    before { @editor.password = @editor.password_confirmation = "a" * 7 }
     it { should be_invalid }
   end  
 end

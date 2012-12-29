@@ -1,6 +1,6 @@
-class CreateOrgTypeEditors < ActiveRecord::Migration
+class CreateEditors < ActiveRecord::Migration
   def change
-    create_table :org_type_editors do |t|
+    create_table :editors do |t|
       t.string :first_name
       t.string :last_name
       t.string :email

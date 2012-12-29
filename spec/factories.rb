@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :org_type_editor do
+  factory :editor do
     first_name             "Bruce"
     last_name              "Williams"
     email                  "brucew@foobar.com"

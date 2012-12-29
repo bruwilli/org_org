@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: org_type_editors
+# Table name: editors
 #
 #  id              :integer          not null, primary key
 #  first_name      :string(255)
@@ -11,8 +11,7 @@
 #  password_digest :string(255)
 #
 
-class OrgTypeEditor < ActiveRecord::Base
-  #require "email_confirmation_validator"
+class Editor < ActiveRecord::Base
   attr_accessible :first_name, :last_name, 
                   :email, :email_confirmation,
                   :password, :password_confirmation

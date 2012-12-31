@@ -24,6 +24,12 @@ RSpec::Matchers.define :have_title do |text|
   end
 end
 
+RSpec::Matchers.define :have_any_error_message do
+  match do |page|
+    page.should have_selector('div.alert.alert-error')
+  end
+end
+
 RSpec::Matchers.define :have_heading do |text|
   match do |page|
     page.should have_selector('h1', text: text)

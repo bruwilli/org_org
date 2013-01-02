@@ -16,8 +16,21 @@ module EditorSessionsHelper
     @current_editor ||= Editor.find_by_remember_token(cookies[:editor_remember_token])
   end
 
+  def current_editor?(editor)
+    editor == current_editor
+  end
+
   def sign_out_as_editor
     self.current_editor = nil
     cookies.delete(:editor_remember_token)
+  end
+
+  def editor_redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    session.delete(:return_to)
+  end
+
+  def editor_store_location
+    session[:return_to] = request.url
   end
 end

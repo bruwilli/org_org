@@ -1,0 +1,18 @@
+<% if errors.any? %>
+  <div id="error_explanation">
+    <ul>
+    <% errors.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<% if @editor.errors[:confirmation_email].any? %>
+  <div id="error_explanation">
+    <ul>
+    <% @editor.errors[:confirmation_email].each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,4 +1,7 @@
 class EditorsController < ApplicationController
+  before_filter :signed_in_editor, only: [:edit, :update]
+  before_filter :correct_editor,   only: [:edit, :update]
+
   def show
     @editor = Editor.find(params[:id])
   end
@@ -17,5 +20,32 @@ class EditorsController < ApplicationController
       render 'new'
     end
   end
+
+  def edit
+    @editor.email_confirmation = @editor.email
+  end
   
+  def update
+    if @editor.update_attributes(params[:editor])
+      flash[:success] = "Profile updated"
+      sign_in_as_editor @editor
+      redirect_to @editor
+    else
+      render 'edit'
+    end
+  end
+  
+  private
+
+    def signed_in_editor
+      unless signed_in_as_editor?
+        editor_store_location
+        redirect_to editor_signin_url, notice: "Please sign in."
+      end
+    end
+
+    def correct_editor
+      @editor = Editor.find(params[:id])
+      redirect_to(root_path) unless current_editor?(@editor)
+    end
 end

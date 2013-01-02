@@ -1,0 +1,25 @@
+<%= render 'shared/error_messages' %>
+
+<%= f.label :first_name %>
+<%= f.text_field :first_name %>
+<%= errors_for @editor, :first_name %>
+
+<%= f.label :last_name %>
+<%= f.text_field :last_name %>
+<%= errors_for @editor, :last_name %>
+
+<%= f.label :email %>
+<%= f.text_field :email %>
+<%= errors_for @editor, :email %>
+
+<%= f.label :email_confirmation, "Confirm email" %>
+<%= f.text_field :email_confirmation %>
+<%= errors_for @editor, :email_confirmation %>
+
+<%= f.label :password %>
+<%= f.password_field :password %>
+<%= errors_for @editor, :password %>
+
+<%= f.label :password_confirmation, "Confirm password" %>
+<%= f.password_field :password_confirmation %>
+<%= errors_for @editor, :password_confirmation %>

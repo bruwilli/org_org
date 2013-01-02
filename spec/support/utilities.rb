@@ -1,11 +1,5 @@
 include ApplicationHelper
 
-def valid_editor_signin(editor)
-  fill_in "Email",    with: editor.email
-  fill_in "Password", with: editor.password
-  click_button "Sign in"
-end
-
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     page.should have_selector('div.alert.alert-error', text: message)
@@ -36,3 +30,11 @@ RSpec::Matchers.define :have_heading do |text|
   end
 end
 
+def editor_sign_in(editor)
+  visit editor_signin_path
+  fill_in "Email",    with: editor.email
+  fill_in "Password", with: editor.password
+  click_button "Sign in"
+  # Sign in when not using Capybara as well.
+  cookies[:editor_remember_token] = editor.remember_token
+end

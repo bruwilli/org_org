@@ -152,9 +152,9 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  padding: 10px;
+  padding: 0px;
   margin-bottom: 15px;
-  @include box_sizing;
+  margin-top: 0px;
 }
 
 input {
@@ -165,12 +165,21 @@ input {
   color: #f00;
  ul {
     list-style: none;
-    margin: 0 0 18px 0;
+    margin-top: 0px;
+    li {
+        margin-top: 0px;
+    }
   }
 }
 
 .field_with_errors {
-  @extend .control-group;
-  @extend .error;
+    color: #f00;
+    input, textarea, select, .uneditable-input {
+      background-color : #fcc;
+      margin-bottom: 0px;
+    }
  }
 
+label {
+  margin-top: 15px;
+}

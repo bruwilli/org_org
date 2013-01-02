@@ -59,4 +59,44 @@ describe "Editor pages" do
     end
   end
   
+  describe "edit" do
+    let(:editor) { FactoryGirl.create(:editor) }
+    before do
+      editor_sign_in editor
+      visit edit_editor_path(editor) 
+    end
+
+    describe "page" do
+      it { should have_heading("Update your profile") }
+      it { should have_title("Editor profile") }
+    end
+
+    describe "with invalid information" do
+      before { click_button "Save changes" }
+
+      it { should have_content('error') }
+    end
+
+    describe "with valid information" do
+      let(:new_first_name)  { "New First Name" }
+      let(:new_last_name)  { "New Last Name" }
+      let(:new_email) { "new@example.com" }
+      before do
+        fill_in "First name",       with: new_first_name
+        fill_in "Last name",        with: new_last_name
+        fill_in "Email",            with: new_email
+        fill_in "Confirm email",    with: new_email
+        fill_in "Password",         with: editor.password
+        fill_in "Confirm password", with: editor.password
+        click_button "Save changes"
+      end
+
+      it { should have_title new_first_name }
+      it { should have_success_message }
+      it { should have_link('Editor sign out', href: editor_signout_path) }
+      specify { editor.reload.first_name.should  == new_first_name }
+      specify { editor.reload.last_name.should  == new_last_name }
+      specify { editor.reload.email.should == new_email }
+    end
+  end
 end

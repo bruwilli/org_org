@@ -1,0 +1,10 @@
+<% provide(:title, 'All editors') %>
+<h1>All editors</h1>
+
+<ul class="editors">
+  <% @editors.each do |editor| %>
+    <li>
+      <%= link_to "#{editor.first_name} #{editor.last_name}", editor %>
+    </li>
+  <% end %>
+</ul>

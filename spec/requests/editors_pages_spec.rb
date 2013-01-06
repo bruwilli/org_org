@@ -4,6 +4,30 @@ describe "Editor pages" do
 
   subject { page }
 
+  describe "index" do
+    before do
+      editor_sign_in FactoryGirl.create(:editor)
+      FactoryGirl.create(:editor, first_name: "Bob", 
+                                  last_name: "Wilson",
+                                  email: "bob@example.com",
+                                  email_confirmation: "bob@example.com")
+      FactoryGirl.create(:editor, first_name: "Ben", 
+                                  last_name: "Johnson",
+                                  email: "ben@example.com",
+                                  email_confirmation: "ben@example.com")
+      visit editors_path
+    end
+
+    it { should have_title 'All editors' }
+    it { should have_heading 'All editors' }
+
+    it "should list each editor" do
+      Editor.all.each do |editor|
+        page.should have_selector('li', text: "#{editor.first_name} #{editor.last_name}")
+      end
+    end
+  end
+  
   describe "editor signup page" do
     before { visit editor_signup_path }
 

@@ -31,6 +31,7 @@ describe "Authentication" do
       before { editor_sign_in(editor) }
 
       it { should have_title(editor.first_name) }
+      it { should have_link('Editors',    href: editors_path) }      
       it { should have_link('Profile', href: editor_path(editor)) }
       it { should have_link('Settings', href: edit_editor_path(editor)) }      
       it { should have_link('Editor sign out', href: editor_signout_path) }
@@ -72,6 +73,11 @@ describe "Authentication" do
         describe "submitting to the update action" do
           before { put editor_path(editor) }
           specify { response.should redirect_to(editor_signin_path) }
+        end
+        
+        describe "visiting the editor index" do
+          before { visit editors_path }
+          it { should have_title 'Editor sign in' }
         end
       end
     end

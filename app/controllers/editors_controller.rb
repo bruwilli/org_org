@@ -1,5 +1,5 @@
 class EditorsController < ApplicationController
-  before_filter :signed_in_editor, only: [:edit, :update]
+  before_filter :signed_in_editor, only: [:index, :edit, :update]
   before_filter :correct_editor,   only: [:edit, :update]
 
   def show
@@ -21,6 +21,10 @@ class EditorsController < ApplicationController
     end
   end
 
+  def index
+    @editors = Editor.all
+  end
+  
   def edit
     @editor.email_confirmation = @editor.email
   end

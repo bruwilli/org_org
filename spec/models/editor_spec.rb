@@ -33,8 +33,19 @@ describe Editor do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
+  it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }  
   it { should be_valid }
+  it { should_not be_admin }
+
+  describe "with admin attribute set to 'true'" do
+    before do
+      @editor.save!
+      @editor.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
   
   describe "when first_name is not present" do
     before { @editor.first_name = " " }

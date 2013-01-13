@@ -5,25 +5,27 @@ describe "Editor pages" do
   subject { page }
 
   describe "index" do
-    before do
-      editor_sign_in FactoryGirl.create(:editor)
-      FactoryGirl.create(:editor, first_name: "Bob", 
-                                  last_name: "Wilson",
-                                  email: "bob@example.com",
-                                  email_confirmation: "bob@example.com")
-      FactoryGirl.create(:editor, first_name: "Ben", 
-                                  last_name: "Johnson",
-                                  email: "ben@example.com",
-                                  email_confirmation: "ben@example.com")
+    let(:editor) { FactoryGirl.create(:editor) }
+
+    before(:each) do
+      editor_sign_in editor
       visit editors_path
     end
 
     it { should have_title 'All editors' }
     it { should have_heading 'All editors' }
 
-    it "should list each editor" do
-      Editor.all.each do |editor|
-        page.should have_selector('li', text: "#{editor.first_name} #{editor.last_name}")
+    describe "pagination" do
+
+      before(:all) { 30.times { FactoryGirl.create(:editor) } }
+      after(:all)  { Editor.delete_all }
+
+      it { should have_selector('div.pagination') }
+
+      it "should list each editor" do
+        Editor.paginate(page: 1).each do |editor|
+          page.should have_selector('li', text: "#{editor.first_name} #{editor.last_name}")
+        end
       end
     end
   end

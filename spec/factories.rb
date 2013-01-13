@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :editor do
-    first_name             "Bruce"
-    last_name              "Williams"
-    email                  "brucew@foobar.com"
-    email_confirmation     "brucew@foobar.com"
+    sequence(:first_name)  { |n| "First#{n}" }
+    sequence(:last_name)  { |n| "Last#{n}" }
+    sequence(:email) { |n| "First#{n}.Last#{n}@example.com"}   
+    sequence(:email_confirmation) { |n| "First#{n}.Last#{n}@example.com"}   
     password               "foobar12"
     password_confirmation  "foobar12"
   end

@@ -22,7 +22,7 @@ class EditorsController < ApplicationController
   end
 
   def index
-    @editors = Editor.all
+    @editors = Editor.paginate(page:params[:page])
   end
   
   def edit

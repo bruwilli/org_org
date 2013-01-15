@@ -99,5 +99,17 @@ describe "Authentication" do
       end
     end
 
+    describe "as non-admin editor" do
+      let(:editor) { FactoryGirl.create(:editor) }
+      let(:non_admin) { FactoryGirl.create(:editor) }
+
+      before { editor_sign_in non_admin }
+
+      describe "submitting a DELETE request to the Editors#destroy action" do
+        before { delete editor_path(editor) }
+        specify { response.should redirect_to(root_path) }        
+      end
+    end
+    
   end
 end

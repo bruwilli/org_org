@@ -28,6 +28,25 @@ describe "Editor pages" do
         end
       end
     end
+    
+    describe "delete links" do
+
+      it { should_not have_link('delete') }
+
+      describe "as an admin user" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
+          editor_sign_in admin
+          visit editors_path
+        end
+
+        it { should have_link('delete', href: editor_path(Editor.first)) }
+        it "should be able to delete another editor" do
+          expect { click_link('delete') }.to change(Editor, :count).by(-1)
+        end
+        it { should_not have_link('delete', href: editor_path(admin)) }
+      end
+    end
   end
   
   describe "editor signup page" do

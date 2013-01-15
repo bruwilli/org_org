@@ -1,6 +1,7 @@
 class EditorsController < ApplicationController
-  before_filter :signed_in_editor, only: [:index, :edit, :update]
+  before_filter :signed_in_editor, only: [:index, :edit, :update, :destroy]
   before_filter :correct_editor,   only: [:edit, :update]
+  before_filter :admin_editor,     only: :destroy
 
   def show
     @editor = Editor.find(params[:id])
@@ -8,6 +9,12 @@ class EditorsController < ApplicationController
 
   def new
     @editor = Editor.new
+  end
+
+  def destroy
+    Editor.find(params[:id]).destroy
+    flash[:success] = "Editor destroyed."
+    redirect_to editors_url
   end
 
   def create
@@ -51,5 +58,9 @@ class EditorsController < ApplicationController
     def correct_editor
       @editor = Editor.find(params[:id])
       redirect_to(root_path) unless current_editor?(@editor)
+    end
+    
+    def admin_editor
+      redirect_to(root_path) unless current_editor.admin?
     end
 end

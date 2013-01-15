@@ -1,3 +1,10 @@
 <li>
   <%= link_to "#{editor.first_name} #{editor.last_name}", editor %>
+  <% if current_editor.admin? && !current_editor?(editor) %>
+    | <%= link_to "delete", 
+          editor, 
+          method: :delete,
+          data: { confirm: "Are you sure you want to delete editor #{editor.first_name} #{editor.last_name}?" } %>
+  <% end %>
+  
 </li>

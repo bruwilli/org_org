@@ -31,7 +31,6 @@ describe "Authentication" do
       before { editor_sign_in(editor) }
 
       it { should have_title(editor.first_name) }
-      it { should have_link('Editors',    href: editors_path) }      
       it { should have_link('Profile', href: editor_path(editor)) }
       it { should have_link('Settings', href: edit_editor_path(editor)) }      
       it { should have_link('Editor sign out', href: editor_signout_path) }
@@ -109,6 +108,22 @@ describe "Authentication" do
         before { delete editor_path(editor) }
         specify { response.should redirect_to(root_path) }        
       end
+      
+      describe "viewing index" do
+        before { visit editors_path }
+        
+        specify { current_path.should == root_path }
+      end     
+      
+      it { should_not have_link("Editors") }
+    end
+
+    describe "as admin editor" do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      before { editor_sign_in admin }
+
+      it { should have_link('Editors', href: editors_path) }      
     end
     
   end

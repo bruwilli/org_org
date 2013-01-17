@@ -5,10 +5,10 @@ describe "Editor pages" do
   subject { page }
 
   describe "index" do
-    let(:editor) { FactoryGirl.create(:editor) }
+    let(:admin) { FactoryGirl.create(:admin) }
 
     before(:each) do
-      editor_sign_in editor
+      editor_sign_in admin
       visit editors_path
     end
 
@@ -30,9 +30,10 @@ describe "Editor pages" do
     end
     
     describe "delete links" do
-
-      it { should_not have_link('delete') }
-
+      before do
+        30.times { FactoryGirl.create(:editor) }
+      end
+      
       describe "as an admin user" do
         let(:admin) { FactoryGirl.create(:admin) }
         before do
@@ -40,7 +41,7 @@ describe "Editor pages" do
           visit editors_path
         end
 
-        it { should have_link('delete', href: editor_path(Editor.first)) }
+        it { should_not have_link('delete', href: editor_path(Editor.first)) }
         it "should be able to delete another editor" do
           expect { click_link('delete') }.to change(Editor, :count).by(-1)
         end

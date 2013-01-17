@@ -1,7 +1,7 @@
 class EditorsController < ApplicationController
   before_filter :signed_in_editor, only: [:index, :edit, :update, :destroy]
   before_filter :correct_editor,   only: [:edit, :update]
-  before_filter :admin_editor,     only: :destroy
+  before_filter :admin_editor,     only: [:index, :destroy]
 
   def show
     @editor = Editor.find(params[:id])

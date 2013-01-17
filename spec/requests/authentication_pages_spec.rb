@@ -19,6 +19,9 @@ describe "Authentication" do
 
       it { should have_title('Editor sign in') }
       it { should have_error_message('Invalid') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Settings') }
+      it { should_not have_link('Editors') }
 
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -35,11 +38,20 @@ describe "Authentication" do
       it { should have_link('Settings', href: edit_editor_path(editor)) }      
       it { should have_link('Editor sign out', href: editor_signout_path) }
       it { should_not have_link('Editor sign in', href: editor_signin_path) }
+      it { should_not have_link('Editors', href: editors_path) }
 
       describe "followed by signout" do
         before { click_link "Editor sign out" }
         it { should have_link('Editor sign in') }
       end
+    end
+    
+    describe "as an admin" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      
+      before { editor_sign_in(admin) }
+      
+      it { should have_link('Editors', href: editors_path )}
     end
   end  
   describe "authorization" do
@@ -115,7 +127,7 @@ describe "Authentication" do
         specify { current_path.should == root_path }
       end     
       
-      it { should_not have_link("Editors") }
+      it { should_not have_link("Editors", href: editors_path) }
     end
 
     describe "as admin editor" do

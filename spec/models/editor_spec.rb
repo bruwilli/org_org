@@ -38,6 +38,20 @@ describe Editor do
   it { should be_valid }
   it { should_not be_admin }
 
+  describe "accessible attributes" do
+    it "should not allow access to admin" do
+      expect do
+        Editor.new(first_name: "Example", 
+                   last_name: "User", 
+                   email: "user@example.com",
+                   email_confirmation: "user@example.com",
+                   password: "foobar12", 
+                   password_confirmation: "foobar12",
+                   admin: true)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end    
+  end
+  
   describe "with admin attribute set to 'true'" do
     before do
       @editor.save!

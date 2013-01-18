@@ -1,7 +1,9 @@
 class EditorsController < ApplicationController
   before_filter :signed_in_editor, only: [:index, :edit, :update, :destroy]
+  before_filter :not_signed_in_editor, only: [:new]
   before_filter :correct_editor,   only: [:edit, :update]
   before_filter :admin_editor,     only: [:index, :destroy]
+  before_filter :should_not_be_signed_in_as_editor, only: [:create]
 
   def show
     @editor = Editor.find(params[:id])
@@ -54,6 +56,12 @@ class EditorsController < ApplicationController
         redirect_to editor_signin_url, notice: "Please sign in."
       end
     end
+    
+    def not_signed_in_editor
+      if signed_in_as_editor?
+        redirect_to(root_path) unless current_editor?(@editor)
+      end
+    end
 
     def correct_editor
       @editor = Editor.find(params[:id])
@@ -62,5 +70,9 @@ class EditorsController < ApplicationController
     
     def admin_editor
       redirect_to(root_path) unless current_editor.admin?
+    end
+
+    def should_not_be_signed_in_as_editor
+      redirect_to(root_path) if signed_in_as_editor?
     end
 end

@@ -100,7 +100,14 @@ describe "Editor pages" do
 
         it { should have_title(editor.first_name) }
         it { should have_success_message('Welcome') }
-        it { should have_link('Editor sign out') }      
+        it { should have_link('Editor sign out') }  
+                
+        describe "when trying to visit new editor page" do
+          before { visit editor_signup_path }
+          
+          specify { current_path.should == root_path }
+        end
+        
       end
     end
   end

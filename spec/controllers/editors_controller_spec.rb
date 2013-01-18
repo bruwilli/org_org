@@ -15,7 +15,9 @@ describe EditorsController do
     end
     
     it "does not change editor count" do
-      expect {post :create, editor: FactoryGirl.attributes_for(:editor)}.to_not change(Editor, :count) 
+      expect {post :create, 
+                   editor: FactoryGirl.attributes_for(:editor)
+             }.to_not change(Editor, :count) 
     end
     
     it "redirects to root URL" do

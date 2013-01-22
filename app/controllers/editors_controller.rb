@@ -69,7 +69,7 @@ class EditorsController < ApplicationController
     end
     
     def admin_editor
-      redirect_to(root_path) unless current_editor.admin?
+      redirect_to(editor_path(current_editor.id), notice: "Not available to non-admin editors") unless current_editor.admin?
     end
 
     def should_not_be_signed_in_as_editor

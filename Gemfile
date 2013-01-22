@@ -40,6 +40,7 @@ group :test do
   gem 'guard-spork', '1.2.0'
   gem 'spork', '0.9.2'
   gem 'factory_girl_rails', '4.1.0'
+  gem 'debugger'
 end
 
 # To use ActiveModel has_secure_password

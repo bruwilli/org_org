@@ -48,7 +48,8 @@ describe "Authentication" do
     
     describe "as an admin" do
       let(:admin) { FactoryGirl.create(:admin) }
-      
+            let(:admin) { FactoryGirl.create(:admin) }
+
       before { editor_sign_in(admin) }
       
       it { should have_link('Editors', href: editors_path )}
@@ -70,6 +71,20 @@ describe "Authentication" do
         describe "after signing in" do
           it "should render the desired protected page" do
             page.should have_title('Editor profile')
+          end
+
+          describe "when signing in again" do
+            before do
+              delete editor_signout_path
+              visit editor_signin_path
+              fill_in "Email",    with: editor.email
+              fill_in "Password", with: editor.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              page.should have_title editor.first_name 
+            end
           end
         end
       end

@@ -133,13 +133,13 @@ describe "Authentication" do
 
       describe "submitting a DELETE request to the Editors#destroy action" do
         before { delete editor_path(editor) }
-        specify { response.should redirect_to(root_path) }        
+        specify { response.should redirect_to(editor_path(non_admin.id)) }        
       end
       
       describe "viewing index" do
         before { visit editors_path }
         
-        specify { current_path.should == root_path }
+        specify { current_path.should == editor_path(non_admin.id) }
       end     
       
       it { should_not have_link("Editors", href: editors_path) }

@@ -11,15 +11,6 @@ OrgOrg::Application.routes.draw do
   match '/about', to: 'static_pages#about'
   match '/contacts', to: 'static_pages#contacts'
   
-  resources :roles
-
-
-  resources :org_types
-
-
-  resources :members
-
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

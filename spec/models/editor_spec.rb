@@ -196,5 +196,14 @@ describe Editor do
     it "should have the right org_template in the right order" do
       @editor.org_templates.should == [newer_org_template, older_org_template]
     end
+
+    it "should destroy associated org_templates" do
+      org_templates = @editor.org_templates.dup
+      @editor.destroy
+      org_templates.should_not be_empty
+      org_templates.each do |org_template|
+        OrgTemplate.find_by_id(org_template.id).should be_nil
+      end
+    end
   end
 end

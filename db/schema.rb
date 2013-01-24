@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113035759) do
+ActiveRecord::Schema.define(:version => 20130124031411) do
 
   create_table "editors", :force => true do |t|
     t.string   "first_name"
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(:version => 20130113035759) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "org_templates", :force => true do |t|
+    t.string   "name"
+    t.integer  "editor_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "org_templates", ["editor_id", "created_at"], :name => "index_org_templates_on_editor_id_and_created_at"
 
   create_table "org_types", :force => true do |t|
     t.string   "name"

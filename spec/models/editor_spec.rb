@@ -35,6 +35,7 @@ describe Editor do
   it { should respond_to(:remember_token) }
   it { should respond_to(:admin) }
   it { should respond_to(:authenticate) }  
+  it { should respond_to(:org_templates) }
   it { should be_valid }
   it { should_not be_admin }
 
@@ -179,5 +180,21 @@ describe Editor do
   describe "editor remember token" do
     before { @editor.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "org_template associations" do
+
+    before { @editor.save }
+    let!(:older_org_template) do 
+      FactoryGirl.create(:org_template, editor: @editor, created_at: 1.day.ago)
+    end
+
+    let!(:newer_org_template) do
+      FactoryGirl.create(:org_template, editor: @editor, created_at: 1.hour.ago)
+    end
+
+    it "should have the right org_template in the right order" do
+      @editor.org_templates.should == [newer_org_template, older_org_template]
+    end
   end
 end

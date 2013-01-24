@@ -11,4 +11,9 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :org_template do
+    name "Test Organization Template"
+    editor
+  end
 end

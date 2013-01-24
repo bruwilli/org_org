@@ -16,6 +16,7 @@ class Editor < ActiveRecord::Base
                   :email, :email_confirmation,
                   :password, :password_confirmation
   attr_accessor :email_confirmation
+  has_many :org_templates
   has_secure_password
 
   before_save { self.email.downcase! }

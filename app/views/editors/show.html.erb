@@ -7,4 +7,13 @@
       </h1>
     </section>
   </aside>
+  <div class="span8">
+    <% if @editor.org_templates.any? %>
+      <h3>Org Templates (<%= @editor.org_templates.count %>)</h3>
+      <ol class="org_templates">
+        <%= render @org_templates %>
+      </ol>
+      <%= will_paginate @org_templates %>
+    <% end %>
+  </div>
 </div>

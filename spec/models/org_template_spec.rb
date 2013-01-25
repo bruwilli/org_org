@@ -28,5 +28,20 @@ describe OrgTemplate do
     before { @org_template.editor_id = nil }
     it { should_not be_valid }
   end
+
+  describe "when editor_id is not present" do
+    before { @org_template.editor_id = nil }
+    it { should_not be_valid }
+  end
+
+  describe "with blank content" do
+    before { @org_template.name = " " }
+    it { should_not be_valid }
+  end
+
+  describe "with name that is too long" do
+    before { @org_template.name = "a" * 65 }
+    it { should_not be_valid }
+  end
   
 end

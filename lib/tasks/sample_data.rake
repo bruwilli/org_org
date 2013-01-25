@@ -21,5 +21,11 @@ namespace :db do
                      password: password,
                      password_confirmation: password)
     end
+
+    editors = Editor.all(limit: 6)
+    50.times do
+      name = Faker::Company.name
+      editors.each { |editor| editor.org_templates.create!(name: name) }
+    end
   end
 end

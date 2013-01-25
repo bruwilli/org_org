@@ -7,6 +7,7 @@ class EditorsController < ApplicationController
 
   def show
     @editor = Editor.find(params[:id])
+    @org_templates = @editor.org_templates.paginate(page: params[:page])
   end
 
   def new

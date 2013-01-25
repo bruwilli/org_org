@@ -59,6 +59,8 @@ describe "Editor pages" do
 
   describe "editor settings page" do
     let(:editor) { FactoryGirl.create(:editor) }
+    let!(:m1) { FactoryGirl.create(:org_template, editor: editor, name: "Foo") }
+    let!(:m2) { FactoryGirl.create(:org_template, editor: editor, name: "Bar") }
 
     # Code to make a user variable
     before { visit editor_path(editor) }
@@ -66,6 +68,12 @@ describe "Editor pages" do
     it { should have_heading(editor.first_name) }
     it { should have_heading(editor.last_name) }
     it { should have_title(editor.first_name) }
+
+    describe "org_templates" do
+      it { should have_content(m1.name) }
+      it { should have_content(m2.name) }
+      it { should have_content(editor.org_templates.count) }
+    end
   end
 
   describe "signup" do
